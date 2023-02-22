@@ -6,6 +6,6 @@ const router = express.Router();
 router.route('/').post(courseController.createCourse); // localhost:3000/courses
 // router.route('/yeni').post(courseController.yenikurs); // localhost:3000/courses/yenikurs
 router.route('/').get(courseController.getAllCourses);
-
+router.route('/:slug').get(courseController.getCourse);
 
 module.exports = router;
