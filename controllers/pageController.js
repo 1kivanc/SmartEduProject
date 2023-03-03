@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 
+
 exports.getIndexPage = (req,res) => {
     console.log(req.session.userID);
     res.status(200).render('index', {
@@ -37,8 +38,7 @@ exports.getContactPage = (req,res) => {
 
 exports.sendEmail = async (req,res) => {
 
-    const email = "" 
-    const password = ""
+    
    const outputMessage = `
    <h1>Mail Details </h1>
    <ul>
@@ -55,15 +55,15 @@ exports.sendEmail = async (req,res) => {
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-      user: email ,// gmail account
-      pass: password // gmail pass 
+      user: "" ,// gmail account
+      pass: "" // gmail pass 
     },
   });
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <kivanc@gmail.com>', // sender address
-    to: "kivanc0@gmail.com", // list of receivers
+    from: '"Smart Edu 👻" <kivan@gmail.com>', // sender address
+    to: "kivanc@gmail.com", // list of receivers
     subject: "smart edu contact From new message  ✔", // Subject line
     text: "Hello world?", // plain text body
     html:outputMessage, // html body
@@ -75,6 +75,7 @@ exports.sendEmail = async (req,res) => {
   // Preview only available when sending through an Ethereal account
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   // Preview 
-
+  req.flash("success","We Received your message succesfuly");
+  req.flash("error", `Something happened!`);
   res.status(200).redirect('contact');
 }
