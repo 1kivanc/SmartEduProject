@@ -21,6 +21,7 @@ router.route('/signup').post([
 // router.route('/yeni').post(courseController.yenikurs); // localhost:3000/courses/yenikurs
 router.route('/login').post(authController.loginUser);
 router.route('/logout').get(authController.logoutUser);
+router.route('/:id').delete(authController.deleteUser);
 router.route('/dashboard').get(authMiddleware,authController.getDashboardPage);
 
 
