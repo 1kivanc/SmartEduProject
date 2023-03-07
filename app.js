@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require('express-session');
 const MongoStore =  require('connect-mongo');
+require("dotenv").config();
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const pageRoute = require("./routes/pageRoute");
@@ -13,7 +14,7 @@ const app = express();
 // Connect db
 
 mongoose.set('strictQuery', true);
-mongoose.connect("mongodb://127.0.0.1:27017/smartedu-db", {
+mongoose.connect(`mongodb+srv://kivanc:${process.env.PASSWORD}@cluster0.ytdikri.mongodb.net/?retryWrites=true&w=majority`, {
   
   })
   .then(() => {
@@ -37,7 +38,7 @@ app.use(session({
   secret:'my_keyboard_cat',
   resave:false,
   saveUninitialized: true,
-  store: MongoStore.create({mongoUrl: 'mongodb://127.0.0.1:27017/smartedu-db'})
+  store: MongoStore.create({mongoUrl: `mongodb+srv://kivanc:${process.env.PASSWORD}@cluster0.ytdikri.mongodb.net/?retryWrites=true&w=majority`})
 }))
 app.use(flash());
 app.use((req, res, next)=> {
@@ -59,7 +60,7 @@ app.use("/categories", categoryRoute);
 app.use("/users", userRoute);
 
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`App started on port ${port}`);
 });
